@@ -1,0 +1,14 @@
+# Idea and Eclipse
+.classpath
+.project
+.settings/
+target/
+*.iml
+.idea/*
+.idea/
+**/.idea/
+bin/
+gen/
+
+# Mac OS X
+*.DS_Store
