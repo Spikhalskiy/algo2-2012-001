@@ -5,9 +5,9 @@ __author__ = 'Dmitry'
 from Utils import *
 from Structures import *
 
-CLUSTERS_COUNT = 6
+CLUSTERS_COUNT = 4
 
-list, vertexCount = read("clustering1.txt")               # Get all the arguments
+list, vertexCount = read("clustering1.txt")
 edges = map(createEdge, list)
 sortedEdges = sorted(edges, key = lambda edge : edge.cost)
 vertices = map(Vertex, range(1, 501, 1))
