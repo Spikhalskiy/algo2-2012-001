@@ -12,3 +12,4 @@ gen/
 
 # Mac OS X
 *.DS_Store
+*.pyc
