@@ -6,22 +6,29 @@ __author__ = 'Dmitry'
 from Utils import *
 import numpy
 
+def getFullSubsetDefinition(number):
+    return (number << 1) + 1
+
+def getShortSubsetDefinition(number):
+    return number >> 1
+
 def getDistance(vertex1, vertex2):
     return sqrt((vertex1[0] - vertex2[0]) ** 2 + (vertex1[1] - vertex2[1]) ** 2)
 
 def fill(number, matrix, matrixInited, vertexes, vertexesCount):
+    fullSubsetDefinition = getFullSubsetDefinition(number)
     for j in xrange(1, vertexesCount):
         matrix[number, j] = maxint
         jMask = getMaskForPosition(j)
 
-        if isPosition(number, jMask): #if j in set
-            subsetWithoutJ = addOrRemovePosition(number, jMask)
-
+        if isPosition(fullSubsetDefinition, jMask): #if j in set
+            subsetWithoutJFullDefinition = addOrRemovePosition(fullSubsetDefinition, jMask)
+            subsetWithoutJShortDefinition = getShortSubsetDefinition(subsetWithoutJFullDefinition)
             for k in xrange(vertexesCount):
                 if not isPosition(number, getMaskForPosition(k)): continue
                 if k == j: continue
-                if not matrixInited[subsetWithoutJ]: fill(subsetWithoutJ, matrix, matrixInited, vertexes, vertexesCount)
-                value = matrix[subsetWithoutJ, k] + getDistance(vertexes[k], vertexes[j])
+                if not matrixInited[subsetWithoutJShortDefinition]: fill(subsetWithoutJShortDefinition, matrix, matrixInited, vertexes, vertexesCount)
+                value = matrix[subsetWithoutJShortDefinition, k] + getDistance(vertexes[k], vertexes[j])
                 if value < matrix[number, j]: matrix[number, j] = value
 
     matrixInited[number] = True
@@ -29,26 +36,29 @@ def fill(number, matrix, matrixInited, vertexes, vertexesCount):
 def process(filename):
     vertexes, vertexesCount = read(filename)
 
-    matrix = numpy.zeros(shape=(2 ** vertexesCount, vertexesCount))
-    matrixInited = [False for x in xrange(2 ** vertexesCount)]
 
-    for sub in xrange(2, 2 ** vertexesCount):
+    #we use only subsets with 1 on the end because we need only subsets with {0}. See getFullSubsetDefinition
+    matrix = numpy.zeros(shape=(2 ** (vertexesCount - 1), vertexesCount))
+    matrixInited = [False for x in xrange(2 ** (vertexesCount - 1))]
+
+    for sub in xrange(1, 2 ** (vertexesCount - 1)):
         matrix[sub, 0] = maxint
 
-    #init subset=1 - {0}
-    matrix[1, 0] = 0
-    for x in xrange(2, vertexesCount):
-        matrix[1, x] = maxint
-    matrixInited[1] = True
+    #init subset=0 - {0}
+    matrix[0, 0] = 0
+    for x in xrange(1, vertexesCount):
+        matrix[0, x] = maxint
+    matrixInited[0] = True
 
-    #start from index 2, because subset = 0 is not actual, subset = 1 filled already
-    for subset in xrange(2, 2 ** vertexesCount):
-        if not matrixInited[subset] and isPosition(subset, 1):
+    #start from index 1, because subset = 0 filled already
+    for subset in xrange(1, 2 ** (vertexesCount - 1)):
+        if not matrixInited[subset]:
+            print "Progress... %s %%" % (subset * 100 / 2 ** (vertexesCount - 1))
             fill(subset, matrix, matrixInited, vertexes, vertexesCount)
 
     minValue = maxint
     for j in xrange(1, vertexesCount):
-        value = matrix[2 ** vertexesCount - 1][j] + getDistance(vertexes[j], vertexes[0])
+        value = matrix[2 ** (vertexesCount - 1) - 1][j] + getDistance(vertexes[j], vertexes[0])
         if value < minValue: minValue = value
 
     print matrix
