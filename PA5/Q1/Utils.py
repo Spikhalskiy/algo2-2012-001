@@ -9,10 +9,10 @@ def read(fileName):
 
 #number from 0
 def getMaskForPosition(number):
-    return 0b1 << number
+    return 1 << number
 
 def isPosition(code, mask):
-    return code & mask != 0
+    return (code & mask) != 0
 
 def addOrRemovePosition(code, mask):
     return code ^ mask
