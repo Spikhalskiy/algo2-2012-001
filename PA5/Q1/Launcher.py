@@ -21,7 +21,7 @@ def fill(number, matrix, matrixInited, vertexes, vertexesCount):
         matrix[number, j] = maxint
         jMask = getMaskForPosition(j)
 
-        if isPosition(fullSubsetDefinition, jMask): #if j in set ???
+        if isPosition(fullSubsetDefinition, jMask): #if j in set
             subsetWithoutJFullDefinition = addOrRemovePosition(fullSubsetDefinition, jMask)
             subsetWithoutJShortDefinition = getShortSubsetDefinition(subsetWithoutJFullDefinition)
             for k in xrange(vertexesCount):
@@ -55,7 +55,7 @@ def process(filename):
     #start from index 1, because subset = 0 filled already
     for subset in xrange(1, 2 ** (vertexesCount - 1)):
         if not matrixInited[subset]:
-            #print "Progress... %s %%" % (subset * 100 / 2 ** (vertexesCount - 1))
+            if subset % 200 == 0: print "Progress... %s %%" % (subset * 100 / 2 ** (vertexesCount - 1))
             fill(subset, matrix, matrixInited, vertexes, vertexesCount)
 
     minValue = maxint
@@ -65,4 +65,4 @@ def process(filename):
 
     print "Minimum path: %f" % minValue
 
-process("dataset_answer_30.878504.txt")
+process("tsp.txt")
