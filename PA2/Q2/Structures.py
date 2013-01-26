@@ -1,4 +1,5 @@
-__author__ = 'Dmitry'
+__author__ = 'Dmitry Spikhalskiy'
+
 class Vertex:
     bitIntArray = None
     bitSum = None

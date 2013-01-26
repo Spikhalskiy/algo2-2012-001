@@ -1,6 +1,6 @@
-import sys
+__author__ = 'Dmitry Spikhalskiy'
 
-__author__ = 'Dmitry'
+import sys
 
 from Utils import *
 from Structures import *

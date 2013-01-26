@@ -1,6 +1,6 @@
-import networkx as nx
+__author__ = 'Dmitry Spikhalskiy'
 
-__author__ = 'Dmitry'
+import networkx as nx
 
 from Utils import *
 

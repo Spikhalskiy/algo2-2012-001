@@ -1,7 +1,7 @@
+__author__ = 'Dmitry Spikhalskiy'
+
 from math import sqrt
 from sys import maxint
-
-__author__ = 'Dmitry'
 
 from Utils import *
 import numpy

@@ -1,4 +1,4 @@
-__author__ = 'Dmitry'
+__author__ = 'Dmitry Spikhalskiy'
 
 def read(fileName):
     with open(fileName, "r") as f:

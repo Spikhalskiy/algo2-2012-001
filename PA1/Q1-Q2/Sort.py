@@ -1,5 +1,6 @@
+__author__ = 'Dmitry Spikhalskiy'
+
 from __future__ import division #make division non truncated
-__author__ = 'Dmitry'
 
 def getKey(pair):
     return pair[0] - pair[1] + pair[0] / 10000

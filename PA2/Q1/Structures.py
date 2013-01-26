@@ -1,4 +1,4 @@
-__author__ = 'Dmitry'
+__author__ = 'Dmitry Spikhalskiy'
 
 class Edge:
     node1 = None
